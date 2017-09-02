@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Гостевая книга</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" role="navigation"><!--Верхняя панель-->
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+          <a class="navbar-brand" href="/">Гостевая книга</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav nav-pills  navbar-nav navbar-right">
+            <li class="active">
+              <a href="#add_message_modal" data-toggle="modal">
+                <span class="badge pull-right"><?=$num_message?></span>
+                <b>Добавить запись</b>
+              </a>
+            </li>
+          </ul>          
+        </div>
+      </div>
+    </nav><!--Конец верхней панели-->
+    <data class="col-sm-10 col-sm-offset-1">
+
+      <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Дата добавления записи: <br>Имя автора:</div>
+        <div class="panel-body">
+          <h3>Текст вопроса</h3>
+        </div>
+
+        <!-- List group -->
+        <ul class="list-group ">
+          <li class="list-group-item">Вопрос 1</li>
+          <li class="list-group-item">Вопрос 2</li>
+          <li class="list-group-item"><a href="#add_message_modal" role="button" id="add_answer_button" parent="1" class="btn btn-success" data-toggle="modal">Ответить</a></li>
+        </ul>
+      </div>
+                        
+    </data>
+    <!--Модальное окно-->
+    <div id="add_message_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Добавить запись в гостевую книгу</h3>
+          </div>
+          <div class="modal-body">
+
+          <form class="form-horizontal" role="form" id="main_form">
+
+            <div class="form-group">
+                <label for="user_name" class="col-sm-4 control-label">Имя пользователя:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="user_name" id="user_name" placeholder="Имя пользователя" required="required">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="text" class="col-sm-4 control-label">Текст сообщения:</label>
+                <div class="col-sm-7">
+                    <textarea class="form-control" rows="5" style="resize:none" name="user_message" id="user_message" placeholder="Сообщение" required="required"></textarea>
+                </div>
+            </div>                
+
+            <hr>
+            <div class="form-group">
+            <div class="col-sm-11">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success">Добавить запись</button>
+                </div>
+                </div>
+              </div>
+          </form>
+
+          </div>
+          <div class="modal-footer">
+              <div id="result_message" style="display:none"></div>
+          </div>
+        </div>    
+    <!--MODALS END-->    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
