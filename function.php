@@ -26,7 +26,20 @@ function add_message($user_name, $user_message, $parent = false)
 		$xml->answers->{"parent_$parent"}->addChild('answer', $id_message);
 	}
 	$xml->last_message = time();
-	if($xml->asXML(__DIR__.'/data.xml'))
+	if($xml->asXML($_SERVER['DOCUMENT_ROOT'].'/data.xml'))
+	{
+		return true;
+	} else {
+		return false;
+	}	
+}
+
+function edit_message ($id, $message)
+{
+	$xml = simplexml_load_file($_SERVER['DOCUMENT_ROOT'].'/data.xml');
+	$data_message = $xml->xpath("/data/messages/message[id='".$id."']");
+	$data_message[0]->user_message = $message;
+	if($xml->asXML($_SERVER['DOCUMENT_ROOT'].'/data.xml'))
 	{
 		return true;
 	} else {

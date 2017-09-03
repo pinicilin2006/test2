@@ -5,21 +5,14 @@ foreach($_POST as $key => $val){
 }
 $result = '';
 //Проверка данных
-if(!$user_name)
+if(!$id_message || !is_numeric($id_message))
 {
-	$err[]='Не указано имя пользователя';
+	$err[]='Не указано ID сообщения или оно имеет недопустимый формат';
 }
 
-if(!$user_message)
+if(!$edit_user_message)
 {
 	$err[] = 'Отсутствует текст сообщения';
-}
-
-$xml = simplexml_load_file($_SERVER['DOCUMENT_ROOT'].'/data.xml');
-$time_last_message = $xml->last_message;
-if((time() - $time_last_message) < 10)
-{
-	$err[] = 'Допускается отправка сообщения не чаще чем раз в 10 секунд';
 }
 if(isset($err))
 {
@@ -31,10 +24,8 @@ if(isset($err))
 	echo $result;
 	exit();
 }
-if($parent == '0' || !isset($parent)){
-	$parent = false;
-}
-if(add_message($user_name, $user_message, $parent))
+
+if(edit_message($id_message, $edit_user_message))
 {
 	echo 'success';
 } else {

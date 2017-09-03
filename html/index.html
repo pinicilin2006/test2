@@ -28,7 +28,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav nav-pills  navbar-nav navbar-right">
             <li class="active">
-              <a href="#add_message_modal" data-toggle="modal">
+              <a href="#add_message_modal" data-toggle="modal" data-content="0">
                 <span class="badge pull-right"><?=$num_message?></span>
                 <b>Добавить запись</b>
               </a>
@@ -39,25 +39,51 @@
     </nav><!--Конец верхней панели-->
     <data class="col-sm-10 col-sm-offset-1">
 
+<?php
+foreach($data as $key=>$val){
+?>
       <div class="panel panel-primary">
         <!-- Default panel contents -->
-        <div class="panel-heading">Дата добавления записи: <br>Имя автора:</div>
+        <div class="panel-heading">Дата добавления записи: <?=date('d.m.Y', $data[$key]['time'])?> <br>Имя автора: <?=$data[$key]['user_name']?></div>
         <div class="panel-body">
-          <h3>Текст вопроса</h3>
+          <div class="col-sm-10">
+            <h4><div id="<?=$data[$key]['id']?>"><?=$data[$key]['user_message']?></div></h4>
+          </div>
+          <div class="col-sm-2">
+            <a href="#edit_message_modal" role="button" data-content="<?=$data[$key]['id']?>" class="btn btn-default pull-right" data-toggle="modal">Редактировать</a>
+          </div>
         </div>
 
         <!-- List group -->
         <ul class="list-group ">
-          <li class="list-group-item">Вопрос 1</li>
-          <li class="list-group-item">Вопрос 2</li>
-          <li class="list-group-item"><a href="#add_message_modal" role="button" id="add_answer_button" parent="1" class="btn btn-success" data-toggle="modal">Ответить</a></li>
+          <?php 
+            if(isset($data[$key]['answer'])){
+              foreach($data[$key]['answer'] as $k=>$v)
+              { 
+          ?>
+          <li class="list-group-item clearfix">
+            <div class="col-sm-10">
+              <b><u>Ответ от пользователя <?=$data[$key]['answer'][$k]['user_name']?></u>:</b>
+              <em><div id="<?=$data[$key]['answer'][$k]['id']?>"><?=$data[$key]['answer'][$k]['user_message']?></div></em>
+            </div>  
+            <div class="col-sm-2">
+              <a href="#edit_message_modal" role="button" data-content="<?=$data[$key]['answer'][$k]['id']?>" class="btn btn-default pull-right" data-toggle="modal">Редактировать</a>
+            </div>
+          </li>
+          <?php
+              }
+            }
+          ?>
+          <li class="list-group-item"><a href="#add_message_modal" role="button" data-content="<?=$data[$key]['id']?>" class="btn btn-success" data-toggle="modal">Ответить</a></li>
         </ul>
       </div>
-                        
+<?php
+  }
+?>                        
     </data>
-    <!--Модальное окно-->
+    <!--Модальное окно добавления сообщения-->
     <div id="add_message_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -80,7 +106,7 @@
                     <textarea class="form-control" rows="5" style="resize:none" name="user_message" id="user_message" placeholder="Сообщение" required="required"></textarea>
                 </div>
             </div>                
-
+            <input type="hidden" name="parent" id="parent"></input>
             <hr>
             <div class="form-group">
             <div class="col-sm-11">
@@ -95,13 +121,51 @@
           <div class="modal-footer">
               <div id="result_message" style="display:none"></div>
           </div>
-        </div>    
-    <!--MODALS END-->    
+        </div>
+      </div>
+    </div>    
+    <!--MODALS END-->
+<!--Модальное окно редактирования сообщения-->
+    <div id="edit_message_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Редактирование записи</h3>
+          </div>
+          <div class="modal-body">
+
+          <form class="form-horizontal" role="form" id="edit_form">
+            <div class="form-group">
+                <label for="text" class="col-sm-4 control-label">Текст сообщения:</label>
+                <div class="col-sm-7">
+                    <textarea class="form-control" rows="5" style="resize:none" name="edit_user_message" id="edit_user_message" placeholder="Сообщение" required="required"></textarea>
+                </div>
+            </div>                
+            <input type="hidden" name="id_message" id="id_message"></input>
+            <hr>
+            <div class="form-group">
+            <div class="col-sm-11">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success">Редактировать запись</button>
+                </div>
+                </div>
+              </div>
+          </form>
+
+          </div>
+          <div class="modal-footer">
+              <div id="edit_result_message" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <!--MODALS END-->          
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.js"></script>
+    <script src="js/jquery.js?v=<?=mktime()?>"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/bootstrap.js?v=<?=mktime()?>"></script>
+    <script src="js/script.js?v=<?=mktime()?>"></script>
   </body>
 </html>
